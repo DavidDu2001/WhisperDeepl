@@ -4,7 +4,6 @@ import deepl
 import whisper
 import torch
 from googletrans import Translator
-auth_key = "d36d6d0f-3a89-4a01-9437-7da88f7ac1c8:fx"
 
 from datetime import timedelta
 
@@ -76,9 +75,9 @@ def convert_txt_srt(file):
     return new_file
 
 
-def translate(file, file_trans):
+def translate(file, file_trans, deepl_key):
     filename = os.path.basename(file)
-    translator = deepl.Translator(auth_key)
+    translator = deepl.Translator(deepl_key)
 
     # Generate new filename
     translated_filename = "deepl_" + filename
@@ -95,7 +94,7 @@ def translate(file, file_trans):
     return output  # Return the translated file path
 
 
-def translate_whisper(file, output, model_size):
+def translate_whisper(file, output, model_size, deepl_key):
     # Step 1: Transcribe the audio to SRT
     srt_file = whisper_transcribe(file, output,model_size)
 
@@ -103,7 +102,7 @@ def translate_whisper(file, output, model_size):
     txt_file = convert_srt_txt(srt_file)
 
     # Step 3: Translate the TXT file
-    translated_txt_file = translate(txt_file, output)
+    translated_txt_file = translate(txt_file, output, deepl_key)
 
     # Step 4: Convert the translated TXT back to SRT
     final_srt_file = convert_txt_srt(translated_txt_file)

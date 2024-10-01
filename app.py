@@ -29,12 +29,13 @@ def index():
 def upload_file():
     uploaded_file = request.files['file']
     model_size = request.form['model_size']  # Get the selected model size
+    deepl_key = request.form['deepl_key']
     if uploaded_file and uploaded_file.filename != '':
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
         uploaded_file.save(file_path)
 
         # Translate the file and get the new filename
-        filename = translate_whisper(file_path, app.config['UPLOAD_FOLDER'], model_size)
+        filename = translate_whisper(file_path, app.config['UPLOAD_FOLDER'], model_size, deepl_key)
         os.remove(file_path)
         # Redirect to download the new SRT file
         return redirect(url_for('download_file', filename=filename))
