@@ -9,9 +9,8 @@ auth_key = "d36d6d0f-3a89-4a01-9437-7da88f7ac1c8:fx"
 from datetime import timedelta
 
 
-def whisper_transcribe(file, output):
+def whisper_transcribe(file, output, model_size):
     # Configuration
-    model_size = "medium"
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     # Load the model
@@ -74,42 +73,51 @@ def convert_txt_srt(file):
     with open(new_file, 'w', encoding='utf-8') as f:
         # Write the contents to the new file
         f.write(file_contents)
+    return new_file
 
-def translate(file,file_trans):
+
+def translate(file, file_trans):
     filename = os.path.basename(file)
-
     translator = deepl.Translator(auth_key)
-    filename = "deepl_" + filename
-    output = os.path.join(file_trans,
-                             filename)  # Adjust the extension as needed
+
+    # Generate new filename
+    translated_filename = "deepl_" + filename
+    output = os.path.join(file_trans, translated_filename)  # Adjust the extension as needed
 
     try:
-        # Using translate_document_from_filepath() with file paths
-        translator.translate_document_from_filepath(
-            file,
-            output,
-            target_lang="EN-US",
-        )
+        # Translate the document
+        translator.translate_document_from_filepath(file, output, target_lang="EN-US")
     except deepl.DocumentTranslationException as error:
-        # If an error occurs during document translation after the document was
-        # already uploaded, a DocumentTranslationException is raised. The
-        # document_handle property contains the document handle that may be used to
-        # later retrieve the document from the server, or contact DeepL support.
-        doc_id = error.document_handle.id
-        doc_key = error.document_handle.key
-        print(f"Error after uploading ${error}, id: ${doc_id} key: ${doc_key}")
+        print(f"Error after uploading: {error}, id: {error.document_handle.id} key: {error.document_handle.key}")
     except deepl.DeepLException as error:
-        # Errors during upload raise a DeepLException
         print(error)
 
+    return output  # Return the translated file path
 
-if __name__ == '__main__':
-    file = r"C:\Users\david\PycharmProjects\whisper\MP3\video.mp4"
-    output = r"C:/Users/david/PycharmProjects/whisper/transcriptions"
-    # srt_file = whisper_transcribe(file, output)
-    # txt_file = convert_srt_txt(srt_file)
-    txt_file = r"C:\Users\david\PycharmProjects\whisper\transcriptions\video.txt"
-    txt_file_trans = r"C:\Users\david\PycharmProjects\whisper\transcriptions"
 
-    translate(txt_file,txt_file_trans)
-    convert_txt_srt(txt_file_trans)
+def translate_whisper(file, output, model_size):
+    # Step 1: Transcribe the audio to SRT
+    srt_file = whisper_transcribe(file, output,model_size)
+
+    # Step 2: Convert the SRT file to TXT
+    txt_file = convert_srt_txt(srt_file)
+
+    # Step 3: Translate the TXT file
+    translated_txt_file = translate(txt_file, output)
+
+    # Step 4: Convert the translated TXT back to SRT
+    final_srt_file = convert_txt_srt(translated_txt_file)
+
+    # Return just the filename of the final translated SRT file
+    return os.path.basename(final_srt_file)
+#
+# if __name__ == '__main__':
+#     file = r"C:\Users\david\PycharmProjects\whisper\MP3\video.mp4"
+#     output = r"C:/Users/david/PycharmProjects/whisper/transcriptions"
+#     # srt_file = whisper_transcribe(file, output)
+#     # txt_file = convert_srt_txt(srt_file)
+#     txt_file = r"C:\Users\david\PycharmProjects\whisper\transcriptions\video.txt"
+#     txt_file_trans = r"C:\Users\david\PycharmProjects\whisper\transcriptions"
+#
+#     translate(txt_file,txt_file_trans)
+#     convert_txt_srt(txt_file_trans)

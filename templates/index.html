@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Audio File</title>
+</head>
+<body>
+    <h1>Upload Audio File for Transcription</h1>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <label for="file">Choose audio file:</label>
+        <input type="file" name="file" id="file" required><br><br>
+
+        <label>Choose model size:</label><br>
+        <input type="radio" name="model_size" value="base" required> Simple<br>
+        <input type="radio" name="model_size" value="small" checked> Medium<br>
+        <input type="radio" name="model_size" value="medium"> Best<br><br>
+
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>
