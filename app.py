@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 import os, shutil
 from whisper_trans import translate_whisper, valid_key
 
-# auth_key = "d36d6d0f-3a89-4a01-9437-7da88f7ac1c8:fx"
 
 app = Flask(__name__)
 

@@ -4,7 +4,6 @@ import whisper
 import torch
 
 from datetime import timedelta
-# deepl_key = "d36d6d0f-3a89-4a01-9437-7da88f7ac1c8:fx"
 
 def whisper_transcribe(file, output, model_size):
     # Configuration
@@ -13,8 +12,6 @@ def whisper_transcribe(file, output, model_size):
 
         # Load the model
         model = whisper.load_model(model_size).to(device)
-
-        # Your audio file
 
         # Transcribe the audio
         result = model.transcribe(file)
