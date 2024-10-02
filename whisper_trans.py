@@ -28,6 +28,7 @@ def whisper_transcribe(file, output, model_size):
         with open(srt_file_path, 'w', encoding='utf-8') as srtFile:
             pass  # Clear the file
 
+        #for each segment, write in files
         for segment in segments:
             start_time = str(timedelta(seconds=segment['start'])).replace('.', ',')
             end_time = str(timedelta(seconds=segment['end'])).replace('.', ',')
@@ -96,6 +97,7 @@ def translate(file, file_trans,deepl_key):
 
 def valid_key(key):
     try:
+        #Check if given key is valid
         translator = deepl.Translator(key)
         translator.translate_text("test", target_lang="EN-US")
         return True
@@ -115,19 +117,10 @@ def translate_whisper(file, output, model_size,deepl_key):
     # Step 4: Convert the translated TXT back to SRT
     final_srt_file = convert_txt_srt(translated_txt_file)
 
+    #step 5: cleanup files
     os.remove(srt_file)
     os.remove(txt_file)
     os.remove(translated_txt_file)
+
     # Return just the filename of the final translated SRT file
     return os.path.basename(final_srt_file)
-#
-# if __name__ == '__main__':
-#     file = r"C:\Users\david\PycharmProjects\whisper\MP3\video.mp4"
-#     output = r"C:/Users/david/PycharmProjects/whisper/transcriptions"
-#     # srt_file = whisper_transcribe(file, output)
-#     # txt_file = convert_srt_txt(srt_file)
-#     txt_file = r"C:\Users\david\PycharmProjects\whisper\transcriptions\video.txt"
-#     txt_file_trans = r"C:\Users\david\PycharmProjects\whisper\transcriptions"
-#
-#     translate(txt_file,txt_file_trans)
-#     convert_txt_srt(txt_file_trans)
