@@ -38,6 +38,7 @@ def upload_file():
     uploaded_file = request.files.get('file')
     model_size = request.form.get('model_size')
     deepl_key = request.form.get('DeepL_Key')
+    target = request.form.get('language')
 
     #get extension of uploaded file
     file_name_without_extension = uploaded_file.filename.rsplit('.', 1)[1]
@@ -59,7 +60,7 @@ def upload_file():
 
     # Translate the file and get the new filename
     try:
-        filename = translate_whisper(file_path, app.config['UPLOAD_FOLDER'], model_size, deepl_key)
+        filename = translate_whisper(file_path, app.config['UPLOAD_FOLDER'], model_size, deepl_key,target)
     except Exception as e:
         flash(f'Error during processing: {str(e)}')
         os.remove(file_path)  # Clean up uploaded file on error

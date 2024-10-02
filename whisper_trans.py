@@ -74,7 +74,7 @@ def convert_txt_srt(file):
     return new_file
 
 
-def translate(file, file_trans,deepl_key):
+def translate(file, file_trans,deepl_key,target):
     filename = os.path.basename(file)
     translator = deepl.Translator(deepl_key)
 
@@ -84,7 +84,7 @@ def translate(file, file_trans,deepl_key):
 
     try:
         # Translate the document
-        translator.translate_document_from_filepath(file, output, target_lang="EN-US")
+        translator.translate_document_from_filepath(file, output, target_lang=target)
     except deepl.DocumentTranslationException as error:
         print(f"Error after uploading: {error}, id: {error.document_handle.id} key: {error.document_handle.key}")
     except deepl.DeepLException as error:
@@ -101,7 +101,7 @@ def valid_key(key):
     except:
         return False
 
-def translate_whisper(file, output, model_size,deepl_key):
+def translate_whisper(file, output, model_size,deepl_key, target):
     # Step 1: Transcribe the audio to SRT
     srt_file = whisper_transcribe(file, output,model_size)
 
@@ -109,7 +109,7 @@ def translate_whisper(file, output, model_size,deepl_key):
     txt_file = convert_srt_txt(srt_file)
 
     # Step 3: Translate the TXT file
-    translated_txt_file = translate(txt_file, output,deepl_key)
+    translated_txt_file = translate(txt_file, output,deepl_key,target)
 
     # Step 4: Convert the translated TXT back to SRT
     final_srt_file = convert_txt_srt(translated_txt_file)

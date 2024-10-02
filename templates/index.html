@@ -35,7 +35,8 @@
         }
         input[type="file"],
         input[type="text"],
-        input[type="submit"] {
+        input[type="submit"],
+        select {
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ddd;
@@ -91,6 +92,23 @@
                 <input type="radio" name="model_size" value="small" checked> Medium
                 <input type="radio" name="model_size" value="medium"> Best
             </div>
+
+            <label for="language">Select language for transcription:</label>
+            <select id="language" name="language" required>
+                <option value="EN-US">English</option>
+                <option value="ES">Spanish</option>
+                <option value="FR">French</option>
+                <option value="DE">German</option>
+                <option value="JA">Japanese</option>
+                <option value="ZH-HANS"> Chinese (simplified)</option>
+                <option value="ZH-HANT"> Chinese (traditional)</option>
+                <option value="PT-BR">Portuguese (Brazilian)</option>
+                <option value="PT-PT">Portuguese (all Portuguese variants)</option>
+                <option value="IT">Italian</option>
+                <option value="RU">Russian</option>
+                <option value="AR">Arabic</option>
+                <option value="NL">Dutch</option>
+            </select><br>
 
           <label for="DeepL_Key">Additional Information:</label><br>
         <input type="text" id="DeepL_Key" name="DeepL_Key" placeholder="Enter key here" required><br><br>
