@@ -46,12 +46,12 @@ def upload_file():
 
     #Refuse files that have not the correct extension
     if file_name_without_extension not in app.config['UPLOAD_EXTENSIONS']:
-        flash('Wrong file type. Please choose a valid audio file.')
+        flash('Wrong file type. Please choose a valid mp3/mp4 file.')
         return redirect(url_for('index'))
 
     #Check whether key is valid or not
     if not valid_key(deepl_key):
-        flash('Invalid key.')
+        flash('Invalid DeepL API key. You can obtain a key at https://www.deepl.com/en/pro-api')
         return redirect(url_for('index'))
 
     #Save the file
