@@ -26,7 +26,7 @@ This project uses OpenAI's Whisper model to transcribe audio and video files and
    pip install -r requirements.txt
    ```
 
-3. Install pytorch. If you want to use your GPU for the whisper model, you will need to install pytorch with CUDA support which can be obtained from here: https://pytorch.org/get-started/locally/.
+3. Install pytorch. If you want to use your GPU for the whisper model, you will need to install pytorch with CUDA support which can be obtained from [PyTorch](https://pytorch.org/get-started/locally/).
 
 ## Usage
 
