@@ -115,6 +115,9 @@ def translate_whisper(file, output, model_size,deepl_key):
     # Step 4: Convert the translated TXT back to SRT
     final_srt_file = convert_txt_srt(translated_txt_file)
 
+    os.remove(srt_file)
+    os.remove(txt_file)
+    os.remove(translated_txt_file)
     # Return just the filename of the final translated SRT file
     return os.path.basename(final_srt_file)
 #

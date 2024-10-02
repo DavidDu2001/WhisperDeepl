@@ -65,7 +65,7 @@ def upload_file():
         flash(f'Error during processing: {str(e)}')
         os.remove(file_path)  # Clean up uploaded file on error
         return redirect(url_for('index'))
-
+    os.remove(file_path)
     return redirect(url_for('download_file', filename=filename))
 
 
@@ -73,7 +73,6 @@ def upload_file():
 def download_file(filename):
     # Send the file
     response = send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
-
     return response
 
 if __name__ == '__main__':
