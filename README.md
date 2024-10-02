@@ -46,10 +46,7 @@ This project uses OpenAI's Whisper model to transcribe audio and video files and
 6. After the transcription and translation are complete, you will be able to download the translated transcript as an SRT file.
 
 ## Supported Models
-You can choose from different model sizes based on your needs. Keep in mind that larger models will consume more resources.
-
-## Contributing
-Contributions are welcome! If you have suggestions for improvements or features, feel free to create an issue or submit a pull request.
+Larger models will consume more GPU resources but will generate better translations and transcriptions.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
