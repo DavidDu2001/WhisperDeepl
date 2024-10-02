@@ -59,5 +59,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [DeepL](https://www.deepl.com) for their translation API.
 
 ---
-
-Feel free to modify any sections to better fit your project’s specifics!
